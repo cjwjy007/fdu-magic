@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let base = 'localhost:80';
+let base = 'http://localhost:80';
 axios.defaults.baseURL = base;
 
 export const requestLogin = params => {
@@ -21,15 +21,15 @@ export const requestLogin = params => {
 };
 
 export const getMagicVideoList = params => {
-    return axios.post(`/video/list.php`, {data: {name: 'getMagicVideoList', data: params}});
+    return axios.post(`/video/list.php`, {name: 'getMagicVideoList', data: params});
 };
 
 export const addMagicVideoInfo = params => {
-    return axios.post(`/video/list.php`, {data: {name: 'addMagicVideoInfo', data: params}});
+    return axios.post(`/video/list.php`, {name: 'addMagicVideoInfo', data: params});
 };
 export const editMagicVideoInfo = params => {
-    return axios.post(`/video/list.php`, {data: {name: 'editMagicVideoInfo', data: params}});
+    return axios.post(`/video/list.php`, {name: 'editMagicVideoInfo', data: params});
 };
 export const deleteMagicVideoInfo = params => {
-    return axios.post(`/video/list.php`, {data: {name: 'deleteMagicVideoInfo', data: params}});
+    return axios.post(`/video/list.php`, {name: 'deleteMagicVideoInfo', data: params});
 };

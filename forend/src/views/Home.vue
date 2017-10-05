@@ -52,7 +52,7 @@
 			</aside>
 			<section class="content-container">
 				<div class="grid-content bg-purple-light">
-					<el-col :span="24" class="breadcrumb-container">
+					<el-col :span="24" class="breadcrumb-container" style="margin-bottom: 30px">
 						<strong class="title">{{$route.name}}</strong>
 						<el-breadcrumb separator="/" class="breadcrumb-inner">
 							<el-breadcrumb-item v-for="item in $route.matched" :key="item.path">
@@ -75,7 +75,7 @@
 	export default {
 		data() {
 			return {
-				sysName:'VUEADMIN',
+				sysName:'复旦魔术社',
 				collapsed:false,
 				sysUserName: '',
 				sysUserAvatar: '',

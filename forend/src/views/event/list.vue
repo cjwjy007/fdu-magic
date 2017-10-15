@@ -1,78 +1,46 @@
 <template>
     <div class="app-container">
         <el-collapse v-model="activeCollapseNames">
-            <el-collapse-item title="添加视频" name="1">
+            <el-collapse-item title="添加事件" name="1">
                 <el-form :model="newData" :rules='formRules' :label-position="labelPosition" ref="addForm">
-                    <el-form-item label="魔术名" prop="name">
-                        <el-input v-model="newData.name" placeholder="魔术名"></el-input>
+                    <el-form-item label="日期" prop="date">
+                        <el-input v-model="newData.date" placeholder="日期"></el-input>
                     </el-form-item>
-                    <el-form-item label="链接" prop="link">
-                        <el-input v-model="newData.link" placeholder="链接"></el-input>
+                    <el-form-item label="事件类型" prop="type">
+                        <el-input v-model="newData.type" placeholder="事件类型"></el-input>
                     </el-form-item>
-                    <el-form-item label="类别" prop="type">
-                        <el-select v-model="newData.type" placeholder="类别">
-                            <el-option label="纸牌" value="纸牌"></el-option>
-                            <el-option label="道具" value="道具"></el-option>
-                        </el-select>
+                    <el-form-item label="详细描述" prop="desc">
+                        <el-input v-model="newData.desc"></el-input>
                     </el-form-item>
-                    <el-form-item label="评分" prop="star">
-                        <el-rate
-                                v-model="newData.star"
-                                :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
-                        </el-rate>
-                    </el-form-item>
-                    <el-form-item label="描述" prop="desc">
-                        <el-input type="textarea" v-model="newData.desc"></el-input>
+                    <el-form-item label="备注" prop="remark">
+                        <el-input type="textarea" v-model="newData.remark"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="handleAdd('addForm')">添加</el-button>
                     </el-form-item>
                 </el-form>
             </el-collapse-item>
-            <el-collapse-item title="视频列表" name="2">
+            <el-collapse-item title="事件列表" name="2">
                 <el-table
                         :data="magicData"
                         style="width: 100%">
                     <el-table-column type="expand">
                         <template scope="props">
-                            <pre>描述：{{ props.row.desc }}</pre>
+                            <pre>备注：{{ props.row.remark }}</pre>
                         </template>
                     </el-table-column>
                     <el-table-column
-                            label="魔术名"
-                            prop="name">
+                            label="日期"
+                            prop="date">
                     </el-table-column>
                     <el-table-column
-                            label="网盘地址"
-                            prop="link">
-                    </el-table-column>
-                    <el-table-column label="评分">
-                        <template scope="scope">
-                            <el-rate
-                                    v-model="scope.row.star"
-                                    disabled
-                                    show-text
-                                    :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
-                                    text-color="#ff9900"
-                                    text-template="{value}">
-                            </el-rate>
-                        </template>
+                            label="事件类型"
+                            prop="type">
                     </el-table-column>
                     <el-table-column
-                            prop="type"
-                            label="类别"
-                            width="100"
-                            :filters="typeFilter"
-                            :filter-method="filterType"
-                            filter-placement="bottom-end">
-                        <template scope="scope">
-                            <el-tag
-                                    :type="scope.row.type === '纸牌' ? 'primary' : 'success'"
-                                    close-transition>{{scope.row.type}}
-                            </el-tag>
-                        </template>
+                            label="详细描述"
+                            prop="decs">
                     </el-table-column>
-
                     <el-table-column label="操作">
                         <template scope="scope">
                             <el-button
@@ -91,26 +59,17 @@
         </el-collapse>
         <el-dialog title="编辑" :visible.sync="isEditDialogShow" size="small">
             <el-form :model="editData" :rules='formRules' :label-position="labelPosition" ref="editForm">
-                <el-form-item label="魔术名" prop="name">
-                    <el-input v-model="editData.name" placeholder="魔术名" required></el-input>
+                <el-form-item label="日期" prop="date">
+                    <el-input v-model="newData.date" placeholder="日期"></el-input>
                 </el-form-item>
-                <el-form-item label="链接" prop="link">
-                    <el-input v-model="editData.link" placeholder="链接"></el-input>
+                <el-form-item label="事件类型" prop="type">
+                    <el-input v-model="newData.type" placeholder="事件类型"></el-input>
                 </el-form-item>
-                <el-form-item label="类别" prop="type">
-                    <el-select v-model="editData.type" placeholder="类别">
-                        <el-option label="纸牌" value="纸牌"></el-option>
-                        <el-option label="道具" value="道具"></el-option>
-                    </el-select>
+                <el-form-item label="详细描述" prop="desc">
+                    <el-input v-model="newData.desc"></el-input>
                 </el-form-item>
-                <el-form-item label="评分" prop="star">
-                    <el-rate
-                            v-model="editData.star"
-                            :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
-                    </el-rate>
-                </el-form-item>
-                <el-form-item label="描述" prop="desc">
-                    <el-input type="textarea" v-model="editData.desc"></el-input>
+                <el-form-item label="备注" prop="remark">
+                    <el-input type="textarea" v-model="newData.remark"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="confirmEdit('editForm')">确认编辑</el-button>
@@ -122,7 +81,7 @@
 </template>
 
 <script>
-    import {getMagicVideoList, addMagicVideoInfo, editMagicVideoInfo, deleteMagicVideoInfo} from '../../api/api.js'
+    import {getMagicEventList, addMagicEventInfo, editMagicEventInfo, deleteMagicEventInfo} from '../../api/api.js'
     import ElDialog from "../../../node_modules/element-ui/packages/dialog/src/component.vue";
 
     export default {
@@ -133,45 +92,42 @@
                 activeCollapseNames: ['2'],
                 isEditDialogShow: false,
                 newData: {
-                    id: '',
-                    name: '',
-                    desc: '',
+                    date: '',
                     type: '',
-                    link: '',
-                    star: 0
+                    desc: '',
+                    remark: ''
                 },
                 editData: {
-                    id: '',
-                    name: '',
-                    desc: '',
+                    date: '',
                     type: '',
-                    link: '',
-                    star: 0
+                    desc: '',
+                    remark: ''
                 },
-                typeFilter: [{text: '纸牌', value: '纸牌'}, {text: '道具', value: '道具'}],
                 magicData: [],
                 formRules: {
-                    name: [
-                        {required: true, message: '请输入魔术名', trigger: 'blur'}
+                    date: [
+                        {required: true, message: '请输入日期', trigger: 'blur'}
                     ],
                     type: [
-                        {required: true, message: '请选择魔术类型', trigger: 'blur'}
+                        {required: true, message: '请输入事件类型', trigger: 'blur'}
                     ],
+                    desc: [
+                        {required: true, message: '请输入事件详情', trigger: 'blur'}
+                    ]
                 }
             }
         },
         methods: {
             initList() {
                 this.magicData = [];
-                getMagicVideoList().then((res) => {
+                getMagicEventList().then((res) => {
                     res.data.forEach((item) => {
                         this.magicData.push({
-                            id: item.video_id,
-                            name: item.video_name,
-                            desc: item.video_desc,
-                            type: item.video_type,
-                            link: item.video_link,
-                            star: parseInt(item.video_star)
+                            id: item.event_id,
+                            type: item.event_type,
+                            desc: item.event_decs,
+                            remark: item.event_remark,
+                            date: item.event_date
                         })
                     })
                 })
@@ -188,18 +144,16 @@
                             confirmButtonText: '确定',
                             cancelButtonText: '取消',
                         }).then(action => {
-                            addMagicVideoInfo(this.newData).then(() => {
+                            addMagicEventInfo(this.newData).then(() => {
                                     this.$message({
                                         type: 'success',
                                         message: '添加成功!'
                                     });
                                     this.newData = {
-                                        id: '',
-                                        name: '',
-                                        desc: '',
+                                        date: '',
                                         type: '',
-                                        link: '',
-                                        star: 0
+                                        desc: '',
+                                        remark: ''
                                     };
                                     this.initList();
                                 }
@@ -215,11 +169,10 @@
             },
             handleEdit(index, row) {
                 this.editData.id = row.id;
-                this.editData.name = row.name;
                 this.editData.desc = row.desc;
                 this.editData.type = row.type;
-                this.editData.link = row.link;
-                this.editData.star = row.star;
+                this.editData.date = row.date;
+                this.editData.remark = row.remark;
                 this.isEditDialogShow = true;
             },
             confirmEdit(formName) {
@@ -230,7 +183,7 @@
                             cancelButtonText: '取消',
                             type: 'warning'
                         }).then(() => {
-                            editMagicVideoInfo(this.editData).then(() => {
+                            editMagicEventInfo(this.editData).then(() => {
                                 this.$message({
                                     type: 'success',
                                     message: '编辑成功!'
@@ -258,7 +211,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    deleteMagicVideoInfo(row.id).then(() => {
+                    deleteMagicEventInfo(row.id).then(() => {
                         this.magicData.splice(index, 1);
                         this.$message({
                             type: 'success',

@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import Main from './views/Main.vue'
 
 import VideoList from './views/video/list.vue'
+import EventList from './views/event/list.vue'
 
 let routes = [
     {
@@ -26,6 +27,15 @@ let routes = [
         iconCls: 'el-icon-message',//图标样式class
         children: [
             { path: '/video', component: VideoList, name: '教学视频查看' }
+        ]
+    },
+    {
+        path: '/',
+        component: Home,
+        name: '事件记录',
+        iconCls: 'el-icon-message',//图标样式class
+        children: [
+            { path: '/event', component: EventList, name: '社团事件' }
         ]
     },
     {

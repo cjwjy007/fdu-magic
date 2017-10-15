@@ -26,9 +26,8 @@ switch ($_POST['name']) {
         }
         break;
     case 'addMagicVideoInfo':
-        $stmt = $conn->prepare("INSERT INTO video (video_id, video_name, video_link,video_star, video_type, video_desc) VALUES (?,?,?,?,?,?)");
-        $stmt->bind_param("ississ", $video_id, $video_name, $video_link, $video_star, $video_type, $video_desc);
-        $video_id = $_POST['data']['id'];
+        $stmt = $conn->prepare("INSERT INTO video (video_name, video_link,video_star, video_type, video_desc) VALUES (?,?,?,?,?)");
+        $stmt->bind_param("ssiss", $video_name, $video_link, $video_star, $video_type, $video_desc);
         $video_name = $_POST['data']['name'];
         $video_link = $_POST['data']['link'];
         $video_star = $_POST['data']['star'];
@@ -60,3 +59,5 @@ switch ($_POST['name']) {
         echo json_encode([]);
         break;
 }
+
+$mysqlController->disconnectMysql($conn);

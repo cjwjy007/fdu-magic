@@ -5,7 +5,7 @@ class MysqlCtrl
     //连接到数据库
     public function connectMysql()
     {
-        $conn = new mysqli("localhost", "root", "19950707", "magic");
+        $conn = new mysqli("localhost", "root", "", "magic");
         if (mysqli_connect_errno()) {
             exit();
         }

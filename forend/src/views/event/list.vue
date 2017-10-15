@@ -39,7 +39,7 @@
                     </el-table-column>
                     <el-table-column
                             label="详细描述"
-                            prop="decs">
+                            prop="desc">
                     </el-table-column>
                     <el-table-column label="操作">
                         <template scope="scope">
@@ -60,16 +60,16 @@
         <el-dialog title="编辑" :visible.sync="isEditDialogShow" size="small">
             <el-form :model="editData" :rules='formRules' :label-position="labelPosition" ref="editForm">
                 <el-form-item label="日期" prop="date">
-                    <el-input v-model="newData.date" placeholder="日期"></el-input>
+                    <el-input v-model="editData.date" placeholder="日期"></el-input>
                 </el-form-item>
                 <el-form-item label="事件类型" prop="type">
-                    <el-input v-model="newData.type" placeholder="事件类型"></el-input>
+                    <el-input v-model="editData.type" placeholder="事件类型"></el-input>
                 </el-form-item>
                 <el-form-item label="详细描述" prop="desc">
-                    <el-input v-model="newData.desc"></el-input>
+                    <el-input v-model="editData.desc"></el-input>
                 </el-form-item>
                 <el-form-item label="备注" prop="remark">
-                    <el-input type="textarea" v-model="newData.remark"></el-input>
+                    <el-input type="textarea" v-model="editData.remark"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="confirmEdit('editForm')">确认编辑</el-button>
@@ -125,7 +125,7 @@
                         this.magicData.push({
                             id: item.event_id,
                             type: item.event_type,
-                            desc: item.event_decs,
+                            desc: item.event_desc,
                             remark: item.event_remark,
                             date: item.event_date
                         })
@@ -138,7 +138,7 @@
                         this.$msgbox({
                             title: '消息',
                             message: this.$createElement('p', null, [
-                                this.$createElement('span', null, `确认添加 ${this.newData.name}?`),
+                                this.$createElement('span', null, `确认添加 ${this.newData.type}?`),
                             ]),
                             showCancelButton: true,
                             confirmButtonText: '确定',
